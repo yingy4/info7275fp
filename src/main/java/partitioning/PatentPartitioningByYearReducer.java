@@ -1,4 +1,4 @@
-package main.java.partitioning;
+package partitioning;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;

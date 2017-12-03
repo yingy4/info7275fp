@@ -1,4 +1,4 @@
-package main.java.partitioning;
+package partitioning;
 
 import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;

@@ -1,4 +1,4 @@
-package main.java.counting;
+package counting;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;

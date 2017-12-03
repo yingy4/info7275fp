@@ -1,10 +1,7 @@
-package main.java;
-
-import main.java.topk.PatentTopKClassificationChain;
+import org.junit.jupiter.api.Assertions;
+import topk.PatentTopKClassificationChain;
 import org.apache.hadoop.fs.Path;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegrationTest {
 
@@ -21,7 +18,7 @@ class IntegrationTest {
         Path temp1 = new Path("output/temp/ptkc");
         Path temp2 = new Path("output/temp/ptkc2");
         int k = Integer.parseInt(ins[3]);
-        assertEquals(0, PatentTopKClassificationChain.run(input,input2,temp1,temp2,outputDir,k), "PatentTopKClassificationChain failed");
+        Assertions.assertEquals(0, PatentTopKClassificationChain.run(input,input2,temp1,temp2,outputDir,k), "PatentTopKClassificationChain failed");
     }
 
 }

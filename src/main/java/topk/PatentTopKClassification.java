@@ -1,4 +1,4 @@
-package main.java.topk;
+package topk;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;

@@ -1,4 +1,4 @@
-package main.java.replicatedjoin;
+package replicatedjoin;
 
 import java.io.BufferedReader;
 import java.io.File;

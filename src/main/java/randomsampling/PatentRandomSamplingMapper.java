@@ -1,4 +1,4 @@
-package main.java.randomsampling;
+package randomsampling;
 
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;

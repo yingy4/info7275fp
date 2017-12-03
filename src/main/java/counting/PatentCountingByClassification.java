@@ -1,4 +1,4 @@
-package main.java.counting;
+package counting;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;

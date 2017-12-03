@@ -1,7 +1,7 @@
-package main.java.topk;
+package topk;
 
-import main.java.counting.PatentCountingByClassification;
-import main.java.replicatedjoin.PatentClassificationCodeReplicatedJoin;
+import counting.PatentCountingByClassification;
+import replicatedjoin.PatentClassificationCodeReplicatedJoin;
 import org.apache.hadoop.fs.Path;
 
 public class PatentTopKClassificationChain {

@@ -1,4 +1,4 @@
-package main.java.randomsampling;
+package randomsampling;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;

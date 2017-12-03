@@ -1,4 +1,4 @@
-package main.java.replicatedjoin;
+package replicatedjoin;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
