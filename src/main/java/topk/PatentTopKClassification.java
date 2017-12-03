@@ -18,10 +18,10 @@ public class PatentTopKClassification {
         }
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
-        run(input, outputDir, Integer.parseInt(args[2]));
+        System.exit(run(input, outputDir, Integer.parseInt(args[2])));
     }
 
-    public static void run(Path in, Path out, int k) throws Exception {
+    public static int run(Path in, Path out, int k) throws Exception {
         Configuration conf = new Configuration();
 
         Path input = in;
@@ -46,9 +46,7 @@ public class PatentTopKClassification {
         if (hdfs.exists(outputDir))
             hdfs.delete(outputDir, true);
         hdfs.close();
-        int code = job.waitForCompletion(true) ? 0 : 1;
-
-        System.exit(code);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 
 }

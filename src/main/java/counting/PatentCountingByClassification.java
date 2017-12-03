@@ -18,10 +18,10 @@ public class PatentCountingByClassification {
         }
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
-        run(input, outputDir);
+        System.exit(run(input, outputDir));
     }
 
-    public static void run(Path in, Path out) throws Exception  {
+    public static int run(Path in, Path out) throws Exception  {
         Configuration conf = new Configuration();
 
         Path input = in;
@@ -45,8 +45,6 @@ public class PatentCountingByClassification {
         if (hdfs.exists(outputDir))
             hdfs.delete(outputDir, true);
         hdfs.close();
-        int code = job.waitForCompletion(true) ? 0 : 1;
-
-        System.exit(code);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 }

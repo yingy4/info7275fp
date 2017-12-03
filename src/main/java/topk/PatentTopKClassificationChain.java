@@ -12,8 +12,7 @@ public class PatentTopKClassificationChain {
         }
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
-        Path temp = new Path("/temp/ptkc");
-        PatentCountingByClassification.run(input,temp);
-        PatentTopKClassification.run(temp,outputDir,Integer.parseInt(args[2]));
+        Path temp = new Path("output/temp/ptkc");
+        System.exit(PatentCountingByClassification.run(input,temp) + PatentTopKClassification.run(temp,outputDir,Integer.parseInt(args[2])));
     }
 }
