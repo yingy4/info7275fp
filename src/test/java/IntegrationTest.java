@@ -1,5 +1,6 @@
 import counting.PatentCountingByDate;
 import org.junit.jupiter.api.Assertions;
+import randomsampling.PatentRandomSampling;
 import topk.PatentTopKClassificationChain;
 import org.apache.hadoop.fs.Path;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,24 @@ class IntegrationTest {
         }
         br.close();
         Assertions.assertEquals(288, count, "Total count not match!");
+    }
+
+    @Test
+    void runPatentRandomSampling() throws Exception {
+        Path input = new Path("input/testinput/rs2016.csv");
+        Path outputDir = new Path("output/testoutput3");
+        Assertions.assertEquals(0, PatentRandomSampling.run(input, outputDir, 1), "PatentRandomSampling failed!");
+        File f = new File("output/testoutput3/part-r-00000");
+        FileInputStream fis = new FileInputStream(f);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String line = null;
+        int count = 0;
+        while ((line = br.readLine()) != null) {
+            count++;
+        }
+        br.close();
+        //1% of 2883 record
+        Assertions.assertTrue(count <= 60, "Random Sampling not working properly!");
     }
 
     @Test

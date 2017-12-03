@@ -15,20 +15,23 @@ public class PatentPartitioningByYear {
     private final static int MIN_YEAR = 1980;
 
     public static void main(String[] args) throws Exception {
-        Configuration conf = new Configuration();
-
         if (args.length != 2) {
-            System.err.println("Usage: PatentPatitioningByYear <in> <out>");
+            System.err.println("Usage: PatentPartitioningByYear <in> <out>");
             System.exit(2);
         }
 
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
+        System.exit(run(input, outputDir));
+    }
+
+    public static int run(Path input, Path outputDir) throws Exception {
+        Configuration conf = new Configuration();
 
         conf.setInt("max_year", MAX_YEAR);
         conf.setInt("min_year", MIN_YEAR);
 
-        Job job = Job.getInstance(conf, "PatentPatitioningByYear");
+        Job job = Job.getInstance(conf, "PatentPartitioningByYear");
         job.setJarByClass(PatentPartitioningByYearMapper.class);
 
         job.setMapperClass(PatentPartitioningByYearMapper.class);
@@ -48,9 +51,7 @@ public class PatentPartitioningByYear {
         if (hdfs.exists(outputDir))
             hdfs.delete(outputDir, true);
         hdfs.close();
-        int code = job.waitForCompletion(true) ? 0 : 1;
-
-        System.exit(code);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 
 }

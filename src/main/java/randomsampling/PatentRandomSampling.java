@@ -12,8 +12,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class PatentRandomSampling {
 
     public static void main(String[] args) throws Exception {
-        Configuration conf = new Configuration();
-
         if (args.length != 3) {
             System.err.println("Usage: PatentRandomSampling <in> <out> <percentage>");
             System.exit(2);
@@ -21,10 +19,16 @@ public class PatentRandomSampling {
 
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
+        float percentage = Float.parseFloat(args[2]);
+        System.exit(run(input, outputDir, percentage));
+    }
+
+    public static int run(Path input, Path outputDir, float percentage) throws Exception {
+        Configuration conf = new Configuration();
 
         Float filterPercentage = 0.0f;
 
-        filterPercentage = Float.parseFloat(args[2]) / 100.0f;
+        filterPercentage = percentage / 100.0f;
 
         conf.setFloat("filter_percentage", filterPercentage);
 
@@ -44,8 +48,6 @@ public class PatentRandomSampling {
         if (hdfs.exists(outputDir))
             hdfs.delete(outputDir, true);
         hdfs.close();
-        int code = job.waitForCompletion(true) ? 0 : 1;
-
-        System.exit(code);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 }
