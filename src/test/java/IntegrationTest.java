@@ -1,3 +1,4 @@
+import counting.PatentCountingByDate;
 import org.junit.jupiter.api.Assertions;
 import topk.PatentTopKClassificationChain;
 import org.apache.hadoop.fs.Path;
@@ -6,11 +7,18 @@ import org.junit.jupiter.api.Test;
 class IntegrationTest {
 
     @Test
+    void runPatentCountingByDate() throws Exception {
+        Path input = new Path("input/testinput/rs2016.csv");
+        Path outputDir = new Path("output/testoutput1");
+        Assertions.assertEquals(0, PatentCountingByDate.run(input,outputDir), "PatentCountingByDate failed");
+    }
+
+    @Test
     void runPatentTopKClassificationChain() throws Exception {
         String[] ins = new String[4];
         ins[0] = "input/testinput/rs2016.csv";
         ins[1] = "input/dict";
-        ins[2] = "output/testoutput";
+        ins[2] = "output/testoutput2";
         ins[3] = "10";
         Path input = new Path(ins[0]);
         Path input2 = new Path(ins[1]);

@@ -12,15 +12,17 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class PatentCountingByDate {
 
     public static void main(String[] args) throws Exception {
-        Configuration conf = new Configuration();
-
         if (args.length != 2) {
             System.err.println("Usage: PatentCountingByDate <in> <out>");
             System.exit(2);
         }
-
         Path input = new Path(args[0]);
         Path outputDir = new Path(args[1]);
+        System.exit(run(input, outputDir));
+    }
+
+    public static int run(Path input, Path outputDir) throws Exception {
+        Configuration conf = new Configuration();
 
         Job job = Job.getInstance(conf, "PatentCountingByDate");
         job.setJarByClass(PatentCountingByDateMapper.class);
@@ -40,8 +42,6 @@ public class PatentCountingByDate {
         if (hdfs.exists(outputDir))
             hdfs.delete(outputDir, true);
         hdfs.close();
-        int code = job.waitForCompletion(true) ? 0 : 1;
-
-        System.exit(code);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 }
