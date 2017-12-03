@@ -16,8 +16,13 @@ public class PatentTopKClassificationChain {
         Path outputDir = new Path(args[2]);
         Path temp1 = new Path("output/temp/ptkc");
         Path temp2 = new Path("output/temp/ptkc2");
-        System.exit(PatentCountingByClassification.run(input,temp1)
-                + PatentTopKClassification.run(temp1,temp2,Integer.parseInt(args[3]))
-                + PatentClassificationCodeReplicatedJoin.run(temp2,input2,outputDir,"inner"));
+        int k = Integer.parseInt(args[3]);
+        System.exit(run(input,input2,temp1,temp2,outputDir,k));
+    }
+
+    public static int run(Path input, Path input2, Path temp1, Path temp2, Path outputDir, int k) throws Exception {
+        return PatentCountingByClassification.run(input,temp1)
+                + PatentTopKClassification.run(temp1,temp2,k)
+                + PatentClassificationCodeReplicatedJoin.run(temp2,input2,outputDir,"inner");
     }
 }
