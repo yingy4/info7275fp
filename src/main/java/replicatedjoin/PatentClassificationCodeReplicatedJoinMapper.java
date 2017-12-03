@@ -63,7 +63,7 @@ public class PatentClassificationCodeReplicatedJoinMapper extends Mapper<Object,
 
             if (joinType.equalsIgnoreCase("inner")) {
                 if (joinValue != null && !joinValue.isEmpty()) {
-                    output.set(value.toString() + "," + joinValue);
+                    output.set(joinValue + "," + sline[1]);
                     context.write(output, NullWritable.get());
                 }
             } else if (joinType.equalsIgnoreCase("leftouter")) {
@@ -71,7 +71,7 @@ public class PatentClassificationCodeReplicatedJoinMapper extends Mapper<Object,
                     output.set(value.toString());
                     context.write(output, NullWritable.get());
                 } else {
-                    output.set(value.toString() + "," + joinValue);
+                    output.set(joinValue + "," + sline[1]);
                     context.write(output, NullWritable.get());
                 }
             }
