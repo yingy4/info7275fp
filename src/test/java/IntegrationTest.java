@@ -1,6 +1,8 @@
 import counting.PatentCountingByDate;
 import org.junit.jupiter.api.Assertions;
+import partitioning.PatentPartitioningByYear;
 import randomsampling.PatentRandomSampling;
+import reducesidejoin.PatentInventorsJoin;
 import topk.PatentTopKClassificationChain;
 import org.apache.hadoop.fs.Path;
 import org.junit.jupiter.api.Test;
@@ -46,6 +48,41 @@ class IntegrationTest {
         br.close();
         //1% of 2883 record
         Assertions.assertTrue(count <= 60, "Random Sampling not working properly!");
+    }
+
+    @Test
+    void runPatentPartitioningByYear() throws Exception {
+        Path input = new Path("input/testinput/rsall.csv");
+        Path outputDir = new Path("output/testoutput4");
+        Assertions.assertEquals(0, PatentPartitioningByYear.run(input, outputDir), "PatentPartitioningByYear failed!");
+        File f = new File("output/testoutput4/part-r-00036");
+        FileInputStream fis = new FileInputStream(f);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String line = null;
+        int count = 0;
+        while ((line = br.readLine()) != null) {
+            count++;
+        }
+        br.close();
+        Assertions.assertEquals(140, count, "Partition for year 2016 not match!");
+    }
+
+    @Test
+    void runPatentInventorsJoin() throws Exception {
+        Path input1 = new Path("input/testinput/rsall.csv");
+        Path input2 = new Path("input/testinput/rsinventorall.csv");
+        Path outputDir = new Path("output/testoutput5");
+        Assertions.assertEquals(0, PatentInventorsJoin.run(input1, input2, outputDir, "inner"), "PatentInventorsJoin failed!");
+        File f = new File("output/testoutput5/part-r-00000");
+        FileInputStream fis = new FileInputStream(f);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String line = null;
+        int count = 0;
+        while ((line = br.readLine()) != null) {
+            count++;
+        }
+        br.close();
+        Assertions.assertEquals(14847, count, "PatentInventorsJoin number not match!");
     }
 
     @Test

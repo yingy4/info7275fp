@@ -32,9 +32,9 @@ public class PatentInventorsJoin {
 
         job.setJarByClass(InventorMapper.class);
 
-        MultipleInputs.addInputPath(job, in1, TextInputFormat.class, InventorMapper.class);
+        MultipleInputs.addInputPath(job, in1, TextInputFormat.class, PatentMapper.class);
 
-        MultipleInputs.addInputPath(job, in2, TextInputFormat.class, PatentMapper.class);
+        MultipleInputs.addInputPath(job, in2, TextInputFormat.class, InventorMapper.class);
 
         job.setReducerClass(PatentInventorsReducer.class);
         job.setNumReduceTasks(1);

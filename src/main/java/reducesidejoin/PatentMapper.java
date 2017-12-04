@@ -12,7 +12,7 @@ public class PatentMapper extends Mapper<Object, Text, Text, Text> {
         String line = value.toString();
         String[] sline = line.split(",");
         if (!sline[0].startsWith("application")) {
-            context.write(new Text(sline[0]), new Text("B"+line));
+            context.write(new Text(sline[0]), new Text("A"+line));
         }
     }
 
