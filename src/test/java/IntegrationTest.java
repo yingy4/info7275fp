@@ -1,3 +1,4 @@
+import bloomfiltering.InventorsBloomFiltering;
 import counting.PatentCountingByDate;
 import org.junit.jupiter.api.Assertions;
 import partitioning.PatentPartitioningByYear;
@@ -83,6 +84,23 @@ class IntegrationTest {
         }
         br.close();
         Assertions.assertEquals(14847, count, "PatentInventorsJoin number not match!");
+    }
+
+    @Test
+    void runInventorsBloomFiltering() throws Exception {
+        Path input = new Path("input/testinput/rsinventorall.csv");
+        Path outputDir = new Path("output/testoutput6");
+        Assertions.assertEquals(0, InventorsBloomFiltering.run(input, outputDir), "InventorsBloomFiltering failed!");
+        File f = new File("output/testoutput6/part-r-00000");
+        FileInputStream fis = new FileInputStream(f);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String line = null;
+        int count = 0;
+        while ((line = br.readLine()) != null) {
+            count++;
+        }
+        br.close();
+        Assertions.assertEquals(5253, count, "InventorsBloomFiltering number not match!");
     }
 
     @Test
