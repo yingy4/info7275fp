@@ -1,9 +1,12 @@
+package it;
+
 import bloomfiltering.InventorsBloomFiltering;
 import counting.PatentCountingByDate;
 import org.junit.jupiter.api.Assertions;
 import partitioning.PatentPartitioningByYear;
 import randomsampling.PatentRandomSampling;
 import reducesidejoin.PatentInventorsJoin;
+import summarization.PatentContributionByStateChain;
 import topk.PatentTopKClassificationChain;
 import org.apache.hadoop.fs.Path;
 import org.junit.jupiter.api.Test;
@@ -113,10 +116,8 @@ class IntegrationTest {
         Path input = new Path(ins[0]);
         Path input2 = new Path(ins[1]);
         Path outputDir = new Path(ins[2]);
-        Path temp1 = new Path("output/temp/ptkc");
-        Path temp2 = new Path("output/temp/ptkc2");
         int k = Integer.parseInt(ins[3]);
-        Assertions.assertEquals(0, PatentTopKClassificationChain.run(input,input2,temp1,temp2,outputDir,k), "PatentTopKClassificationChain failed!");
+        Assertions.assertEquals(0, PatentTopKClassificationChain.run(input,input2,outputDir,k), "PatentTopKClassificationChain failed!");
 
         ArrayList<String> result = new ArrayList<String>();
         result.add("257	Active solid-state devices (e.g., transistors, solid-state diodes),114");
@@ -140,6 +141,15 @@ class IntegrationTest {
             count++;
         }
         br.close();
+    }
+
+    @Test
+    void runPatentContributionByStateChain() throws Exception {
+        Path input1 = new Path("input/testinput/rsall.csv");
+        Path input2 = new Path("input/testinput/rsinventorall.csv");
+        Path outputDir = new Path("output/testoutput7");
+        Assertions.assertEquals(0, PatentContributionByStateChain.run(input1, input2, outputDir), "PatentContributionByStateChain failed!");
+
     }
 
 }

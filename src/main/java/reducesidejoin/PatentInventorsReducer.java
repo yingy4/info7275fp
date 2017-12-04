@@ -41,7 +41,8 @@ public class PatentInventorsReducer extends Reducer<Text, Text, Text, Text> {
             if (!listA.isEmpty() && !listB.isEmpty()) {
                 for (Text A : listA) {
                     for (Text B : listB) {
-                        context.write(A, B);
+                        //context.write(A, B);
+                        context.write(B, A);
                     }
                 }
             }
